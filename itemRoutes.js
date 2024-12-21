@@ -5,7 +5,6 @@ const Category = require('./models/Category');
 
 const router = express.Router();
 
-// GET /items - Fetch all items
 router.get('/items', async (req, res) => {
   try {
     const items = await Item.find();
@@ -15,12 +14,10 @@ router.get('/items', async (req, res) => {
   }
 });
 
-// POST /items - Add an item
 router.post('/items', async (req, res) => {
   try {
     const { itemid, name, categoryid, price, quality } = req.body;
 
-    // Check if the category exists
     const category = await Category.findById(categoryid);
     if (!category) {
       return res.status(404).json({ error: 'Category not found' });
@@ -41,13 +38,11 @@ router.post('/items', async (req, res) => {
   }
 });
 
-// PUT /items/:id - Update an item
 router.put('/items/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { name, categoryid, price, quality } = req.body;
 
-    // Validate categoryid if provided
     if (categoryid) {
       const category = await Category.findById(categoryid);
       if (!category) {
@@ -71,7 +66,6 @@ router.put('/items/:id', async (req, res) => {
   }
 });
 
-// DELETE /items/:id - Delete an item
 router.delete('/items/:id', async (req, res) => {
   try {
     const { id } = req.params;

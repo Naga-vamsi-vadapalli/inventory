@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-  categoryid: { type: mongoose.Schema.Types.ObjectId, ref: 'Item' },
+  categoryid: { type:Number, required: true, unique:true },
   categoryname: { type: String, required: true },
 });
 
