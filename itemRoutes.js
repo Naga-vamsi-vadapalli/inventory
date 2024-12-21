@@ -18,7 +18,7 @@ router.post('/items', async (req, res) => {
   try {
     const { itemid, name, categoryid, price, quality } = req.body;
 
-    const category = await Category.findById(categoryid);
+    
     
 
     const newItem = new Item({
