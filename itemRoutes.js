@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const Item = require('./Items');
-const Category = require('./Category');
+const Item = require('./models/Items');
+const Category = require('./models/Category');
 
 const router = express.Router();
 
