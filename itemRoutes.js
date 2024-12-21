@@ -17,26 +17,34 @@ router.get('/items', async (req, res) => {
 router.post('/items', async (req, res) => {
   try {
     const { itemid, name, categoryid, price, quality } = req.body;
-    
-    const category = await Category.findById(categoryid);
+
+    // Check if category exists, else create a new one
+    let category = await Category.findById(categoryid);
     if (!category) {
-      return res.status(404).json({ error: 'Category not found' });
+      // If category doesn't exist, create a new category
+      category = new Category({
+        name: `New Category for ${name}`, // Default category name, customize as needed
+      });
+      await category.save(); // Save new category to database
     }
 
+    // Create the new item with the found or created category
     const newItem = new Item({
       itemid,
       name,
-      categoryid,
+      categoryid: category._id, // Use the category's _id for the new item
       price,
-      quality
+      quality,
     });
 
-    await newItem.save();
-    res.status(201).json(newItem);
+    await newItem.save(); // Save the item to the database
+    res.status(201).json(newItem); // Respond with the new item
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Failed to add item' });
   }
 });
+
 
 
 router.put('/items/:id', async (req, res) => {
