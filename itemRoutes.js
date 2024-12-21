@@ -19,9 +19,7 @@ router.post('/items', async (req, res) => {
     const { itemid, name, categoryid, price, quality } = req.body;
 
     const category = await Category.findById(categoryid);
-    if (!category) {
-      return res.status(404).json({ error: 'Category not found' });
-    }
+    
 
     const newItem = new Item({
       itemid,
